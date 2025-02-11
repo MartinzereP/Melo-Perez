@@ -1,11 +1,12 @@
 #include <iostream> 
+#include <auth.h>
 using namespace std;
 
 int main()
 {
     cout << "loading ... ";
     
-    
+    authenticateUser();
 
 
     return 0; 
