@@ -57,9 +57,20 @@ bool hasIo_operations() const{
 
 //Setters
 
+void setState(const string& newState) {
+    state = newState;
+}
+void setWaitingTime(int time){
+    waiting_time = time;
+}
+void setTuraroundTime(int time){
+    turnaround_time = time;
+}
 
-
-
+//Update Process state
+void updateState(const string& newState){
+    state = newState;
+}
 
  
 }
@@ -69,7 +80,6 @@ bool hasIo_operations() const{
 main() {
 
   cout << "Hello" << endl;
-
 
 
     return 0;
