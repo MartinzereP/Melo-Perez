@@ -72,10 +72,11 @@ void updateState(const string& newState){
     state = newState;
 }
 
+void ececution_time( const int& time){
+    
+}
  
 }
-
-
 
 main() {
 
