@@ -1,8 +1,8 @@
 #include <iostream> 
-#include <auth.h>
+#include "auth.h"
 #include <thread>
 #include <chrono>
-#include <Process.h>
+#include "Process.h"
 using namespace std;
 
 int main()
@@ -25,6 +25,21 @@ int main()
     cout << "\rLoading Complete!      " << endl;  // Clear the line when done
     
     authenticateUser();
+
+    Process p1(1, 0, 10, 1, 512, true);
+
+    cout << "\nProcess Information:\n";
+    p1.display();
+   
+    // Simulate process execution
+    cout << "\nExecuting process...\n";
+    p1.updateState("RUNNING");
+    p1.execution_time(5);
+    p1.display();
+   
+    p1.execution_time(5);  // Complete execution
+    cout << "\nProcess execution complete.\n";
+    p1.display();
 
 
     return 0; 

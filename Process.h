@@ -21,7 +21,7 @@ public:
     //contructor
     Process(int id, int arrival, int burst, int prio = 0, int memory = 0, bool io = false)
     : pid(id), arrival_time(arrival), burst_time(burst), priority(prio), state("NEW")
-    remaining_time(bust), waiting_time(0), turnaround_time(0), memory_required(memory), io_operations(io){}
+    remaining_time(burst), waiting_time(0), turnaround_time(0), memory_required(memory), io_operations(io){}
 
 //Getters
 int getPID() const{
@@ -72,16 +72,28 @@ void updateState(const string& newState){
     state = newState;
 }
 
-void ececution_time( const int& time){
+// Decrease remaining execution time
+void execution_time( int time){
+    if(remaining_time > 0){
+        remaining_time -= time;
+        if(remaining_time <=0){
+            remaining_time = 0;
+            state = "TERMINATED";
+        }
+    }
     
 }
+// Display process details 
+void display() const{
+    cout << "PID: " << pid << ", State: " << state
+        << ", Arrival Time: " << arrival_time
+        << ", Burst Time: " << burst_time
+        << ", Remaining Time: " << remaining_time
+        << ", Waiting Time: " << waiting_time
+        << ", Turnaround Time: " << turnaround_time
+        << ", Memory Required: " << memory_required
+        << ", IO Operations: " << (io_operations ? "Yes" : "No") << endl;
+}
  
-}
+};
 
-main() {
-
-  cout << "Hello" << endl;
-
-
-    return 0;
-}
