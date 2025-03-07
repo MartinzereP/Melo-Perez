@@ -4,7 +4,82 @@
 #include <chrono>
 #include "Process.h"
 #include <queue>
+#include <algorithm>
 using namespace std;
+
+struct ScheduledProcess{
+    Process process;
+    int completion_time;
+    int turnaround_time;
+    int waiting_time;
+
+    ScheduledProcess(Process p)
+        : process(p), completion_time(0), turnaround_time(0), waiting_time(0){}
+
+    
+};
+
+// FCFS and SJF Scheduling
+void scheduleProcesses(vector<Process>& processes, string algorithm) {
+    vector<ScheduledProcess> scheduled;
+    int current_time = 0;
+
+    if (algorithm == "SJF") {
+        sort(processes.begin(), processes.end(), [](Process a, Process b) {
+            return a.getBurst_time() < b.getBurst_time();
+        });
+    }
+
+    for (auto& p : processes) {
+        ScheduledProcess sp(p);
+
+        // If the current time is less than the arrival time, CPU stays idle
+        if (current_time < p.getArrival_time()) {
+            current_time = p.getArrival_time();
+        }
+
+        sp.waiting_time = current_time - p.getArrival_time();
+        sp.completion_time = current_time + p.getBurst_time();
+        sp.turnaround_time = sp.completion_time - p.getArrival_time();
+
+        scheduled.push_back(sp);
+        current_time = sp.completion_time;
+
+        // Simulating execution time delay for visualization
+        cout << "\nExecuting Process " << p.getPID() << "...\n";
+        p.updateState("RUNNING");
+        p.display();
+        this_thread::sleep_for(chrono::seconds(p.getBurst_time()));
+
+        p.updateState("TERMINATED");
+        p.display();
+    }
+
+    // Calculate average turnaround time and waiting time
+    double avg_turnaround = 0, avg_waiting = 0;
+    for (const auto& sp : scheduled) {
+        avg_turnaround += sp.turnaround_time;
+        avg_waiting += sp.waiting_time;
+    }
+    avg_turnaround /= scheduled.size();
+    avg_waiting /= scheduled.size();
+
+    // Display results
+    cout << "\nScheduling Results (" << algorithm << "):\n";
+    cout << "PID\tArrival\tBurst\tCompletion\tTurnaround\tWaiting\n";
+    for (const auto& sp : scheduled) {
+        cout << sp.process.getPID() << "\t"
+            << sp.process.getArrival_time() << "\t"
+            << sp.process.getBurst_time() << "\t"
+            << sp.completion_time << "\t\t"
+            << sp.turnaround_time << "\t\t"
+            << sp.waiting_time << "\n";
+    }
+
+    cout << "\nAverage Turnaround Time: " << avg_turnaround << endl;
+    cout << "Average Waiting Time: " << avg_waiting << endl;
+}
+
 
 int main()
 {
@@ -27,40 +102,19 @@ int main()
     cout << "\rLoading Complete!      " << endl;  // Clear the line when done
 
     authen();
-    queue<Process> ptest;
-    queue <Process> processQ;
     
-    authenticateUser();
-    queue<Process> ptest;
-    queue<Process> processQ;
+    vector<Process> processList = {
+        Process(1, 0, 10, 1, 512, true),
+        Process(2, 1, 5, 1, 512, true),
+        Process(3, 2, 8, 1, 512, true),
+        Process(4, 3, 2, 1, 512, true)
+    };
 
-    Process p1(1, 0, 10, 1, 512, true);
-    processQ.push(p1);
+    string choice;
+    cout << "Choose Scheduling Algorithm (FCFS/SJF): ";
+    cin >> choice;
 
-    Process p2(2, 0, 10, 1, 512, true);
-    processQ.push(p2);
-
-    Process p3(3, 0, 10, 1, 512, true);
-    processQ.push(p3);
-
-while (!processQ.empty()) {
-    Process I = processQ.front();
-    cout << "\nProcess Information:\n";
-    I.display();
-    //Simulate process execution
-
-    cout << "\nExecution process...\n";
-    I.updateState("RUNNING");
-    I.execution_time(5);
-    I.display();
-
-    I.execution_time(5); //Complete execution
-    cout << "\nProcess execution complete.\n";
-    I.display();
-
-    processQ.pop();
-}
-
+    scheduledProcesses(processList, choice);
 
     return 0; 
 }
