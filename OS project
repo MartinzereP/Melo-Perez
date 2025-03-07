@@ -30,36 +30,37 @@ int main()
     queue<Process> ptest;
     queue <Process> processQ;
     
+    authenticateUser();
+    queue<Process> ptest;
+    queue<Process> processQ;
 
-    while (!processQ.empty()) {
-        Process p1(1, 0, 10, 1, 512, true);
-        processQ.push(p1);
-        
-        Process p2(2, 0, 10, 1, 512, true);
-        processQ.push(p2);
+    Process p1(1, 0, 10, 1, 512, true);
+    processQ.push(p1);
 
-        Process p3(3, 0, 10, 1, 512, true);
-        processQ.push(p3);
+    Process p2(2, 0, 10, 1, 512, true);
+    processQ.push(p2);
 
-        Process I = processQ.front();
-        cout << "\nProcess Information:\n";
-        I.display();        
-        // Simulate process execution
+    Process p3(3, 0, 10, 1, 512, true);
+    processQ.push(p3);
 
-        cout << "\nExecuting process...\n";
-        I.updateState("RUNNING");
-        I.execution_time(5);
-        I.display();
+while (!processQ.empty()) {
+    Process I = processQ.front();
+    cout << "\nProcess Information:\n";
+    I.display();
+    //Simulate process execution
 
-        I.execution_time(5);  // Complete execution
-        cout << "\nProcess execution complete.\n";
-        I.display();
+    cout << "\nExecution process...\n";
+    I.updateState("RUNNING");
+    I.execution_time(5);
+    I.display();
 
-        
+    I.execution_time(5); //Complete execution
+    cout << "\nProcess execution complete.\n";
+    I.display();
 
-        
-        processQ.pop();
+    processQ.pop();
+}
 
-    }
-    return 0;
+
+    return 0; 
 }

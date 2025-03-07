@@ -1,3 +1,8 @@
+#ifndef PROCESS_H
+#define PROCESS_H
+
+
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -58,15 +63,15 @@ public:
 
     //Setters
 
-    void setState(const string& newState) {
-        state = newState;
-    }
-    void setWaitingTime(int time) {
-        waiting_time = time;
-    }
-    void setTuraroundTime(int time) {
-        turnaround_time = time;
-    }
+void setState(const string& newState) {
+    state = newState;
+}
+void setWaitingTime(int time){
+    waiting_time = time;
+}
+void setTurnaroundTime(int time){
+    turnaround_time = time;
+}
 
     //Update Process state
     void updateState(const string& newState) {
@@ -74,19 +79,17 @@ public:
     }
     
 
-    // Decrease remaining execution time
-    void execution_time(int time) {
-        
-        if (remaining_time > 0) {
-            int Create = rand() & 101;
-            if (Create == remaining_time) {
-                create();
-            }
-            remaining_time -= time;
-            if (remaining_time <= 0) {
-                remaining_time = 0;
-                state = "TERMINATED";
-            }
+// Decrease remaining execution time
+void execution_time( int time){
+    if (remaining_time > 0) {
+        int randomValue = rand() % 101;
+        if (randomValue == remaining_time) {
+            create();
+        }
+        remaining_time -= time;
+        if (remaining_time <= 0) {
+            remaining_time = 0;
+            state = "TERMINATED";
         }
 
     }
@@ -103,17 +106,32 @@ public:
     }
 
     
-    queue <Process> processQ;
+}
+// Display process details 
+void display() const{
+    cout << "PID: " << pid << ", State: " << state
+        << ", Arrival Time: " << arrival_time
+        << ", Burst Time: " << burst_time
+        << ", Remaining Time: " << remaining_time
+        << ", Waiting Time: " << waiting_time
+        << ", Turnaround Time: " << turnaround_time
+        << ", Memory Required: " << memory_required
+        << ", IO Operations: " << (io_operations ? "Yes" : "No") << endl;
+}
 
-    void create() {
-        int list;
-        Process process(rand() % 101, list, rand() % 101, rand() % 11, 512, false);
-        processQ.push(process);
-        list += list;
-    }
-    
+static queue<Process> processQ;
+
+void create(){
+    static int list = 0;
+    Process newProcess(rand() % 101, list, rand() % 101, rand() % 11, 512, false);
+    processQ.push(newProcess);
+    list ++;
+}
+ 
 };
 
+queue<Process> Process::processQ;
 
+#endif
 
 
