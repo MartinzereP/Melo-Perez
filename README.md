@@ -7,3 +7,4 @@ Part 2
 Design a process class
 The process should contain specified attributes
 Implement the process into excisting operating system code
+Including virtual memory into our project, something like a page table
