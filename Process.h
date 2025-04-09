@@ -7,8 +7,23 @@
 #include <string>
 #include <vector>
 #include <queue>
+#include <thread>
+#include <chrono>
 
 using namespace std;
+
+const int PAGE_SIZE = 4096;
+const int VIRTUAL_MEMORY_SIZE = 65536;
+const int PHYSICAL_MEMORY_SIZE = 32768;
+const int NUM_PHYSICAL_FRAMES = PHYSICAL_MEMORY_SIZE / PAGE_SIZE;
+
+struct PageTableEntry{
+    bool valid:
+    int frameNumber:
+    bool dirty:
+
+    PageTableEntry() : valid(false), frameNumber(-1), dirty(false){}
+};
 
 
 class Process {
