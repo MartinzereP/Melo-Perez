@@ -12,10 +12,10 @@
 
 using namespace std;
 
-const int PAGE_SIZE = 4096;
-const int VIRTUAL_MEMORY_SIZE = 65536;
-const int PHYSICAL_MEMORY_SIZE = 32768;
-const int NUM_PHYSICAL_FRAMES = PHYSICAL_MEMORY_SIZE / PAGE_SIZE;
+const int Page_size = 4096;
+const int Virtual_memory_size = 65536;
+const int Physical_memory_size = 32768;
+const int Num_physical_frames = Physical_memory_size / Page_size;
 
 struct PageTableEntry{
     bool valid:
@@ -38,6 +38,7 @@ private:
     int turnaround_time;
     int memory_required;
     bool io_operations;
+    vector<PageTableEntry> pageTable;
 
 public:
     //contructor
