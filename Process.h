@@ -1,8 +1,6 @@
 #ifndef PROCESS_H
 #define PROCESS_H
 
-
-
 #include <iostream>
 #include <string>
 #include <vector>
@@ -11,19 +9,6 @@
 #include <chrono>
 
 using namespace std;
-
-const int Page_size = 4096;
-const int Virtual_memory_size = 65536;
-const int Physical_memory_size = 32768;
-const int Num_physical_frames = Physical_memory_size / Page_size;
-
-struct PageTableEntry{
-    bool valid:
-    int frameNumber:
-    bool dirty:
-
-    PageTableEntry() : valid(false), frameNumber(-1), dirty(false){}
-};
 
 
 class Process {
@@ -38,12 +23,16 @@ private:
     int turnaround_time;
     int memory_required;
     bool io_operations;
-    vector<PageTableEntry> pageTable;
+
 
 public:
     //contructor
     Process(int id, int arrival, int burst, int prio = 0, int memory = 0, bool io = false)
-        : pid(id), arrival_time(arrival), burst_time(burst), priority(prio), state("NEW"), remaining_time(burst), waiting_time(0), turnaround_time(0), memory_required(memory), io_operations(io) {}
+        : pid(id), arrival_time(arrival), burst_time(burst), priority(prio), state("NEW"),
+        remaining_time(burst), waiting_time(0), turnaround_time(0), memory_required(memory),
+        io_operations(io) {
+    }
+
 
     //Getters
     int getPID() const {
@@ -82,18 +71,18 @@ public:
     void setState(const string& newState) {
         state = newState;
     }
-    void setWaitingTime(int time){
+    void setWaitingTime(int time) {
         waiting_time = time;
     }
-    void setTurnaroundTime(int time){
+    void setTurnaroundTime(int time) {
         turnaround_time = time;
     }
 
-    
-    
+    //Update Process state
+
 
     // Decrease remaining execution time
-    void execution_time( int time){
+    void execution_time(int time) {
         cout << "Processing... (Remaining Time: " << remaining_time << "s)\n";
 
         // Simulate execution delay
@@ -103,16 +92,16 @@ public:
         if (remaining_time <= 0) {
             remaining_time = 0;
             state = "TERMINATED";
-    }
+        }
 
-    cout << "Process execution resumed.\n";
-
+        cout << "Process execution resumed.\n";
     }
 
     //Update Process state
     void updateState(const string& newState) {
         state = newState;
     }
+
 
     // Display process details 
     void display() const {
@@ -125,33 +114,19 @@ public:
             << ", Memory Required: " << memory_required
             << ", IO Operations: " << (io_operations ? "Yes" : "No") << endl;
     }
-  
 
-    // Display process details 
-    void display() const{
-        cout << "PID: " << pid << ", State: " << state
-            << ", Arrival Time: " << arrival_time
-            << ", Burst Time: " << burst_time
-            << ", Remaining Time: " << remaining_time
-            << ", Waiting Time: " << waiting_time
-            << ", Turnaround Time: " << turnaround_time
-            << ", Memory Required: " << memory_required
-            << ", IO Operations: " << (io_operations ? "Yes" : "No") << endl;
-    }
 
     static queue<Process> processQ;
 
-    void create(){
+    void create() {
         static int list = 0;
         Process newProcess(rand() % 101, list, rand() % 101, rand() % 11, 512, false);
         processQ.push(newProcess);
-        list ++;
+        list++;
     }
- 
+
 };
 
-queue<Process> Process::processQ;
+static queue<Process> processQ;
 
 #endif
-
-
