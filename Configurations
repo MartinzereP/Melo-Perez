@@ -1,0 +1,8 @@
+4MB virtual
+2MB physical
+512KB pages
+Initial Processes-
+Process(1, 0, 10, 1, 512, true)
+Process(2, 1, 5, 1, 512, true),
+Process(3, 2, 8, 1, 512, true),
+Process(4, 3, 2, 1, 512, true)
