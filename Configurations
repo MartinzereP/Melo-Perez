@@ -1,8 +1,39 @@
+Configuration 1
 4MB virtual
 2MB physical
 512KB pages
 Initial Processes-
 Process(1, 0, 10, 1, 512, true)
-Process(2, 1, 5, 1, 512, true),
-Process(3, 2, 8, 1, 512, true),
+Process(2, 1, 5, 1, 512, true)
+Process(3, 2, 8, 1, 512, true)
 Process(4, 3, 2, 1, 512, true)
+
+Configuration 2
+8MB virtual
+4MB physical
+512KB pages
+Initial Processes-
+Process(4, 3, 2, 1, 512, true)
+Process(1, 0, 10, 1, 512, true)
+Process(2, 1, 5, 1, 512, true)
+Process(3, 2, 8, 1, 512, true)
+
+Configuration 3
+9MB virtual
+3MB physical
+512KB pages
+Initial Processes-
+Process(2, 1, 5, 1, 512, true)
+Process(1, 0, 10, 1, 512, true)
+Process(3, 2, 8, 1, 512, true)
+Process(4, 3, 2, 1, 512, true)
+
+Configuration 4
+8MB virtual
+2MB physical
+1MB pages
+Initial Processes-
+Process(4, 3, 2, 1, 512, true)
+Process(1, 0, 10, 1, 512, true)
+Process(3, 2, 8, 1, 512, true)
+Process(2, 1, 5, 1, 512, true)
